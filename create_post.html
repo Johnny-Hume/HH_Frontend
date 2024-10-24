@@ -1,0 +1,41 @@
+<html>
+    <head>
+	<link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+	<script src="create_posts_script.js" defer></script>
+	<h1>Create Post</h1>
+	<a href="index.html">Back to Index</a>
+	<div id="createPostForm">
+	    <div>
+		<label for="hiker_id">Hiker ID:</label>
+		<input id="hiker_id" type="number">
+	    </div>
+	    <div>
+		<label for="title">Title:</label>
+		<input id="title" type="text">
+	    </div>
+	    <div>
+		<label for="pickup">Pickup:</label>
+		<input id="pickup" type="text">
+	    </div>
+	    <div>
+		<label for="dropoff">Dropoff:</label>
+		<input id="dropoff" type="text">
+	    </div>
+	    <div>
+		<label for="date">Date:</label>
+		<input id="date" type="date">
+	    </div>
+	    <div>
+		<label for="num_passengers">Number Of Passengers:</label>
+		<input id="num_passengers" type="number">
+	    </div>
+		<button onclick="sendCreatePostRequest()">Submit</button>
+	</div>
+	<div>
+	    <h2>Status</h2>
+	    <h3 id="statusOutput">Waiting...</h3>
+	</div>
+    </body>
+</html>
