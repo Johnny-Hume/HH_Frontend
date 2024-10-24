@@ -1,5 +1,5 @@
 
-function getTrailAngels(){
+function getHikers(){
     fetch("http://localhost:5000/hikers")
       .then(response => {
 	if (!response.ok) {
@@ -8,14 +8,14 @@ function getTrailAngels(){
 	return response.json();
       })
       .then(data => {
-	data.forEach((hiker) => createTrailAngelCard(hiker));
+	data.forEach((hiker) => createHikerCard(hiker));
       })
       .catch(error => {
 	console.error('Error:', error);
       });
 }
 
-function createTrailAngelCard(hiker){
+function createHikerCard(hiker){
     const div = document.createElement("div");
 
     const trailName = document.createElement("H1");
@@ -30,4 +30,4 @@ function createTrailAngelCard(hiker){
     document.getElementById("hikersDisplay").appendChild(div)
 }
 
-getTrailAngels()
+getHikers()
