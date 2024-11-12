@@ -1,17 +1,29 @@
 function getPosts(){
+    displayLoadingStatus();
     fetch("http://localhost:5000/posts")
-      .then(response => {
-	if (!response.ok) {
-	  throw new Error('Network response was not ok');
-	}
+	.then(response => {
+	    if (!response.ok) {
+		throw new Error('Network response was not ok');
+	    }
+	clearLoadingStatus();
 	return response.json();
-      })
-      .then(data => {
-	data.forEach((post) => createPostCard(post));
-      })
-      .catch(error => {
-	console.error('Error:', error);
-      });
+	})
+	.then(data => {
+	    data.forEach((post) => createPostCard(post));
+	})
+	.catch(error => {
+	    console.error('Error:', error);
+	});
+}
+
+function displayLoadingStatus(){
+    const loading = document.createElement("H1");
+    loading.textContent = "Loading...";
+    document.getElementById("status").appendChild(loading);
+}
+
+function clearLoadingStatus(){
+    document.getElementById("status").innerHTML = "";
 }
 
 function createPostCard(post){
