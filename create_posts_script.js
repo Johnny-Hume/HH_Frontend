@@ -21,15 +21,17 @@ function sendCreatePostRequest(){
 
 function createPostObj(){
 
-    hiker_id = document.getElementById("hiker_id").value
-    title = document.getElementById("title").value
-    pickup = document.getElementById("pickup").value
-    dropoff = document.getElementById("dropoff").value
-    date = document.getElementById("date").value
-    num_passengers = document.getElementById("num_passengers").value
+    userId = document.getElementById("userId").value;
+    userType = document.getElementById("userType").value;
+    title = document.getElementById("title").value;
+    pickup = document.getElementById("pickup").value;
+    dropoff = document.getElementById("dropoff").value;
+    date = document.getElementById("date").value;
+    num_passengers = document.getElementById("num_passengers").value;
 
     return {
-	hiker_id: hiker_id,
+	user_id: userId,
+	user_type: userType,
 	title: title,
 	pickup: pickup,
 	dropoff: dropoff,
