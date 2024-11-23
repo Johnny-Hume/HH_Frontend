@@ -1,5 +1,5 @@
 function getPost(post_id){
-    fetch("http://localhost:5000/post?id=" + post_id)
+    fetch("http://localhost:5000/ride_post?id=" + post_id)
       .then(response => {
 	if (!response.ok) {
 	  throw new Error('Network response was not ok');

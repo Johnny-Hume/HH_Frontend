@@ -1,5 +1,5 @@
 function sendCreatePostRequest(){
-    fetch("http://localhost:5000/post", {
+    fetch("http://localhost:5000/ride_post", {
 	method: "POST",
 	body: JSON.stringify(createPostObj()),
 	headers: { "content-type": "application/json" }
