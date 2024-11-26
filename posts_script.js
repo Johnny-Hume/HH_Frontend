@@ -1,6 +1,6 @@
 function getPosts(){
     displayLoadingStatus();
-    fetch("http://localhost:5000/ride_posts")
+    fetch("http://localhost:5000/posts")
 	.then(response => {
 	    if (!response.ok) {
 		throw new Error('Network response was not ok');
@@ -9,7 +9,18 @@ function getPosts(){
 	return response.json();
 	})
 	.then(data => {
-	    data.forEach((post) => createPostCard(post));
+	    data.forEach((post) => {
+		type = post.id.split(":")[0];
+		if (type == "ride_posts"){
+		    createRidePostCard(post)
+		}
+		else if (type == "general_posts"){
+		    createGeneralPostCard(post)
+		}
+		else {
+		    throw new Error("Unhandled Post Type")
+		}
+	    });
 	})
 	.catch(error => {
 	    console.error('Error:', error);
@@ -25,8 +36,29 @@ function displayLoadingStatus(){
 function clearLoadingStatus(){
     document.getElementById("status").innerHTML = "";
 }
+function createGeneralPostCard(post){
 
-function createPostCard(post){
+    const div = document.createElement("div");
+
+    const title = document.createElement("H1");
+    title.textContent = "Title: " + post["title"];
+
+    const text = document.createElement("p");
+    text.textContent = "Text: " + post["text"];
+
+    const link = document.createElement('a');
+    link.href = "general-post.html?id=" + post["id"]
+    link.textContent = "View Post"
+
+    div.appendChild(title)
+    div.appendChild(text)
+    div.appendChild(link)
+    div.className = "generalPostCard"
+
+    document.getElementById("postsDisplay").appendChild(div)
+}
+
+function createRidePostCard(post){
 
     const div = document.createElement("div");
 
@@ -55,7 +87,7 @@ function createPostCard(post){
     div.appendChild(dropoff)
     div.appendChild(date)
     div.appendChild(num_passengers)
-    div.className = "postCard"
+    div.className = "ridePostCard"
 
     document.getElementById("postsDisplay").appendChild(div)
 }
