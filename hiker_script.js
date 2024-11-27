@@ -15,6 +15,19 @@ function getHikers(){
       });
 }
 
+function getHikerPromise(id){
+    return fetch("http://localhost:5000/hiker?id=" + id)
+      .then(response => {
+	if (!response.ok) {
+	  throw new Error('Network response was not ok');
+	}
+	return response.json();
+      })
+      .catch(error => {
+	console.error('Error:', error);
+      });
+}
+
 function createHikerCard(hiker){
     const div = document.createElement("div");
 
@@ -30,4 +43,3 @@ function createHikerCard(hiker){
     document.getElementById("hikersDisplay").appendChild(div)
 }
 
-getHikers()
