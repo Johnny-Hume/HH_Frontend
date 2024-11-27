@@ -66,7 +66,7 @@ function createRidePostCard(post){
     title.textContent = "Title: " + post["title"];
 
     const link = document.createElement('a');
-    link.href = "post.html?id=" + post["id"]
+    link.href = "ride-post.html?id=" + post["id"]
     link.textContent = "View Post"
 
     const pickup = document.createElement("p");
