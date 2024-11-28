@@ -42,4 +42,4 @@ function createHikerCard(hiker){
 
     document.getElementById("hikersDisplay").appendChild(div)
 }
-
+getHikers()
