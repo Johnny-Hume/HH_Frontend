@@ -1,5 +1,5 @@
 function sendCreateCommentRequest(){
-    fetch("http://localhost:5000/comment", {
+    return fetch("http://localhost:5000/comment", {
 	method: "POST",
 	body: JSON.stringify(createCommentObj()),
 	headers: { "content-type": "application/json" }
@@ -18,7 +18,7 @@ function sendCreateCommentRequest(){
       });
 }
 
-function sendGetCommentsRequest(){
+function sendGetCommentsRequestAndBuildCards(){
     postId = params.get("id")
     fetch("http://localhost:5000/comments?post_id=" + postId)
       .then(response => {
@@ -29,13 +29,15 @@ function sendGetCommentsRequest(){
       })
       .then(comments => {
 	    ids = []
-	    comments.forEach((comment) => {
+	    comments.slice().reverse().forEach((comment) => {
 		ids.push(comment["user_id"])
 	    });
 	    sendGetUserNamesRequest(ids).then(names => {
-		comments.forEach((comment) => {
-		    buildCommentCard(comment, names[comment["user_id"]])
-		})
+		i = comments.length - 1;
+		while(i >= 0){
+		    buildCommentCard(comments[i], names[comments[i]["user_id"]])
+		    i--;
+		}
       })
       .catch(error => {
 	console.error('Error:', error);
@@ -49,12 +51,32 @@ function buildCommentCard(comment, userName){
     const user = document.createElement("h3");
     user.textContent = userName
 
+    const userDiv = document.createElement("div")
+    userDiv.classList.add("commentUserName")
+    userDiv.appendChild(user)
+
+    const createdAt = document.createElement("p");
+    createdAtNoMillis = comment["created_at"].split(".")[0]
+    createdAtNoSeconds = createdAtNoMillis.split(":").slice(0, -1)
+    createdAtFormatted = createdAtNoSeconds[0] + ":" + createdAtNoSeconds[1]
+    createdAt.textContent = createdAtFormatted
+
+    const createdAtDiv = document.createElement("div")
+    createdAtDiv.classList.add("commentCreatedAt")
+    createdAtDiv.appendChild(createdAt)
+
     const text = document.createElement("p");
     text.textContent = comment["text"]
 
-    div.appendChild(user)
-    div.appendChild(text)
+    const textDiv = document.createElement("div")
+    textDiv.classList.add("commentText")
+    textDiv.appendChild(text)
+
+    div.appendChild(userDiv)
+    div.appendChild(textDiv)
+    div.appendChild(createdAtDiv)
     div.classList.add("comment")
+    div.classList.add("grid-container")
     document.getElementById("commentDisplay").appendChild(div)
 }
 
@@ -87,7 +109,13 @@ function buildCreateCommentForm(){
 
     const submitButton = document.createElement("button")
     submitButton.textContent = "Submit"
-    submitButton.onclick = () => {sendCreateCommentRequest()}
+    submitButton.onclick = () => {
+	sendCreateCommentRequest()
+	.then(() => {
+		document.getElementById("commentDisplay").innerHTML = ""
+		sendGetCommentsRequestAndBuildCards();
+	    });
+    }
 
     title = document.createElement("h3")
     title.textContent = "Leave a Comment!"
@@ -112,4 +140,4 @@ function createCommentObj(){
     }
 }
 buildCreateCommentForm()
-sendGetCommentsRequest()
+sendGetCommentsRequestAndBuildCards()

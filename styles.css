@@ -22,6 +22,21 @@ body{
       width: 50%;
       border: 3px solid green;
       padding: 10px;
+      display: grid
+}
+
+.commentUserName{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start:1;
+    grid-row-end:2;
+}
+
+.commentCreatedAt{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start:1;
+    grid-row-end:2;
 }
 
 .generalPostCard{
